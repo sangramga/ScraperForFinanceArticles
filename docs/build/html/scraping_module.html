@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>scraping_module module &#8212; SIA 1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-scraping_module">
+<span id="scraping-module-module"></span><h1>scraping_module module<a class="headerlink" href="#module-scraping_module" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions to scrape the Money Control FInancial Ratios
+and turn them into csv files. Requires a laptop/desktop system with a big enough screen
+Requires installing chromedriver. Tested on Ubuntu 22.04 and working as on Jun 9 2023</p>
+<p>A lot of this is hard coded for simplicity</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.CNBC">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">CNBC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.CNBC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.NextPageURL">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">NextPageURL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currentPageNumber</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currentPageURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#scraping_module.NextPageURL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the URL of the next page. Works only for MoneyControl Financial Ratios.
+No guarantee that the given URL exists. Use try/except statements while using</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.bqprime">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">bqprime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.bqprime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.business_standard">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">business_standard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.business_standard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.business_today">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">business_today</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.business_today" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.consolidatedURL">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">consolidatedURL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#scraping_module.consolidatedURL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets consolidated and not standalone ratios</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.correctformat">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">correctformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currentPageURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#scraping_module.correctformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the URL of the page with added page number. Works only for MoneyControl Financial Ratios.
+No guarantee that the given URL exists. Use try/except statements while using</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.economic_times">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">economic_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.economic_times" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.equity_bulls">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">equity_bulls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.equity_bulls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.fin_express">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">fin_express</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.fin_express" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.getFinancialRatios">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">getFinancialRatios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">PageURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.getFinancialRatios" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrapes off financial ratios as much as available upto 16 prior years
+firstPageURL must be an existing page.
+:returns: Dataframe of extracted data along with the ticker name</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.getName">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#scraping_module.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the name of the stock as encoded into the money control url</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.get_data">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">website</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">driver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">selenium.webdriver.chrome.webdriver.WebDriver</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#scraping_module.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a 4-tuple of date, title, news content and author from the given website.
+:param website: The website from which the data is to be extracted.
+:param driver: The webdriver object.
+:return: A 4-tuple of date, title, news content and author.
+:rtype: tuple</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.livemint">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">livemint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.livemint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.moneycontrol">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">moneycontrol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.moneycontrol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.simply">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">simply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.simply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scraping_module.zeebiz">
+<span class="sig-prename descclassname"><span class="pre">scraping_module.</span></span><span class="sig-name descname"><span class="pre">zeebiz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scraping_module.zeebiz" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">SIA</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Vijay.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/scraping_module.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
