@@ -20,7 +20,7 @@ class ThreadWithReturnValue(Thread):
         return self._return
     
 if __name__ == "__main__":
-
+    
     # Create a list of the functions from the extractors.py file
     # Removed ext.bqprime_daily_extractor, due to bot blocking
     func = [ext.finex_daily_extractor, ext.et_daily_extractor, ext.eqbull_daily_extractor, ext.cnbc_daily_extractor,  ext.zee_daily_extractor, ext.business_standard_daily_extractor, ext.bt_daily_extractor]
