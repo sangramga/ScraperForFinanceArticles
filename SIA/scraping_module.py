@@ -14,6 +14,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 import re
 import numpy as np
+from dateutil.parser import parse
+
 
 def getName(url:str) -> str:
     ''' Obtain the name of the stock as encoded into the money control url'''
@@ -180,8 +182,12 @@ def CNBC(driver):
             ls1 = ls1 + (elem.text)
 
     dats = driver.find_element(By.CLASS_NAME, "nauthor-name").text
-    dattimez = dats[-37:-9]
-    author = dats[:-37]
+    reg = r"^By\s+(.+)\s+(.+)"
+    result = re.match(reg, dats,re.MULTILINE | re.IGNORECASE)
+    if result:
+        author = result.group(1)
+        dattimez = result.group(2)
+        dattimez=clean_datetime_string(dattimez)
     
     return (dattimez,title,ls1,author)
 
@@ -210,7 +216,7 @@ def simply(driver):
     
     author = driver.find_element(By.XPATH,"//div[@class='sc-evZas iNxhpg']").text
     dattimez = driver.find_element(By.XPATH,"//span[@class='styled__PublishedDate-sc-a9o8vv-14 fDsGou']").text
-    
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez[10:],title,ls1,author)
 
 def business_today(driver):
@@ -236,7 +242,17 @@ def business_today(driver):
             ls1 = ls1 +(elem.text)
             
     dats = driver.find_element(By.CLASS_NAME, "str_ftr_rhs")
-    dattimez = dats.text[-25:]
+    text =dats.text
+
+    # Define a regular expression pattern to match the date and time
+    datetime_pattern = r"(\w{3} \d{2}, \d{4}, \d{1,2}:\d{2} [APM]{2} [A-Z]{3})"
+
+    # Use re.search to find the date and time in the text
+    match = re.search(datetime_pattern, text)
+
+   
+    dattimez = match.group(0)
+    dattimez=clean_datetime_string(dattimez)
     author = dats.text[11:-27]
     
     return (dattimez,title,ls1,author)
@@ -271,8 +287,9 @@ def equity_bulls(driver):
             author = elem.text
         else:
             continue
-        
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
+
 def fin_express(driver):
 
     headline = WebDriverWait(driver, 10).until(
@@ -298,7 +315,7 @@ def fin_express(driver):
     dats = driver.find_element(By.ID, "author-link")
     author = dats.text
     dattimez = driver.find_element(By.CLASS_NAME, "ie-network-post-meta-date").text
-    
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 def zeebiz(driver):
     
@@ -336,7 +353,7 @@ def zeebiz(driver):
 
     author = driver.find_element(By.CLASS_NAME,"writer-name").text
     dattimez = driver.find_element(By.CLASS_NAME,"date").text
-
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 def livemint(driver):
 
@@ -365,7 +382,7 @@ def livemint(driver):
             
     author = driver.find_element(By.XPATH,"//span[@class='articleInfo author ']").text
     dattimez = driver.find_element(By.XPATH,"//span[@class='newTimeStamp']").text
-    
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 
 def moneycontrol(driver):
@@ -404,7 +421,7 @@ def moneycontrol(driver):
             
     dattimez = driver.find_element(By.CLASS_NAME,"article_schedule").text
     author = driver.find_element(By.CLASS_NAME,"article_author").text
-    
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 
 def economic_times(driver):
@@ -432,6 +449,7 @@ def economic_times(driver):
 
     dattimez = driver.find_element(By.CLASS_NAME, "jsdtTime")
     dattimez = dattimez.text[14:]
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 
 
@@ -454,7 +472,7 @@ def bqprime(driver):
         author +=obj.text+" "
     dattimez = driver.find_element(By.CLASS_NAME, "story-base-template-m__story-date__3YCRm")
     dattimez = dattimez.text[14:]
-
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 def business_standard(driver):
     
@@ -487,7 +505,7 @@ def business_standard(driver):
             author += " | "
             
     dattimez=driver.find_element(By.CLASS_NAME, "story-first-time").text[17:]
-    
+    dattimez=clean_datetime_string(dattimez)
     return (dattimez,title,ls1,author)
 
 
@@ -585,6 +603,22 @@ def get_data(website:str,driver:webdriver.Chrome) -> tuple:
 
 
     return data
+
+
+# Define a function to clean the strings
+def clean_datetime_string(input_string):
+    # Use regular expressions to remove unwanted elements
+    cleaned_string = re.sub(r'\|', '', input_string)  # Remove '|'
+    cleaned_string = re.sub(r'Updated:', '', cleaned_string)  # Remove 'Updated:'
+    cleaned_string = re.sub(r'\( TIMEZONE : IST \)', '', cleaned_string)  # Remove '( TIMEZONE : IST )'
+    cleaned_string = re.sub(r'\(Published\)', '', cleaned_string)  # Remove '(Published)'
+    cleaned_string = re.sub(r'\(Updated\)', '', cleaned_string)  # Remove '(Updated)'
+    return date_parse(cleaned_string.strip()) # Remove leading and trailing whitespaces
+
+def date_parse(input_string):
+    tzinfos = {"IST": 19800} 
+    x=parse(input_string, tzinfos=tzinfos)
+    return x.strftime("%Y-%m-%d %H:%M:%S")
 
 
 ####################################################################################################

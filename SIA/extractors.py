@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.service import Service as ChromeService
 import scraping_module as mod
 import time
 import pandas as pd
@@ -14,6 +15,9 @@ import re
 import numpy as np
 import os
 
+chrome_driver_path = "./webdriver/chromedriver"
+
+# chrome_driver_path = "./chromedriver"
 # Scroll a page down continuously
 def scrollPage(driver: webdriver.Chrome, scroll_pause_time: float = 0.5, N = 7):
     """ Scroll a page down continuously
@@ -58,15 +62,16 @@ def zee_daily_extractor(df: pd.DataFrame = None) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://www.zeebiz.com/companies")
 
     # Scroll
     scrollPage(driver)
 
     # Wait for the page to load
-    elem = WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.XPATH, '/html/body/div[2]/div/div[3]/div/div[1]/div[2]/div/div/div[2]/div/div/div/section[1]/div'))
+    elem = WebDriverWait(driver, 60).until(
+        EC.presence_of_element_located((By.XPATH, '/html/body/div[2]/div[1]/div[4]/div/div/div[2]/div/div/div[2]/div/div/div/div[6]/section/div/div/div[3]/div/div[1]/div[1]'))
     )
 
     
@@ -97,7 +102,8 @@ def zee_daily_extractor(df: pd.DataFrame = None) -> pd.DataFrame:
                 n += 1
         except:
             driver.close()
-            driver = webdriver.Chrome(options=options)
+            service = ChromeService(executable_path=chrome_driver_path)
+            driver = webdriver.Chrome(service=service,options=options)
             driver.set_page_load_timeout(15)
             continue
 
@@ -109,7 +115,7 @@ def zee_daily_extractor(df: pd.DataFrame = None) -> pd.DataFrame:
     driver.close()
     
     ds = pd.DataFrame(data, columns=["Date", "Title", "News", "Author"])
-    ds["Source"] = "FINANCIAL EXPRESS"
+    ds["Source"] = "Zee Business"
 
     # Find today's date
     today = pd.Timestamp.today().strftime("%Y-%m-%d")
@@ -134,7 +140,8 @@ def bqprime_daily_extractor(df: pd.DataFrame = None) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://www.bqprime.com/markets")
 
     # Wait for 2 seconds
@@ -199,7 +206,8 @@ def business_standard_daily_extractor(df : pd.DataFrame = None) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://www.business-standard.com/markets/news")
     driver.set_page_load_timeout(15)
 
@@ -235,7 +243,8 @@ def business_standard_daily_extractor(df : pd.DataFrame = None) -> pd.DataFrame:
             data.append(info)
         except:
             driver.close()
-            driver = webdriver.Chrome(options=options)
+            service = ChromeService(executable_path=chrome_driver_path)
+            driver = webdriver.Chrome(service=service,options=options)
             driver.set_page_load_timeout(15)
             continue
         
@@ -273,7 +282,8 @@ def bt_daily_extractor(df: pd.DataFrame) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.set_page_load_timeout(30)
     driver.get("https://www.businesstoday.in/markets/stocks")
 
@@ -313,7 +323,8 @@ def bt_daily_extractor(df: pd.DataFrame) -> pd.DataFrame:
                 n += 1
         except:
             driver.close()
-            driver = webdriver.Chrome(options=options)
+            service = ChromeService(executable_path=chrome_driver_path)
+            driver = webdriver.Chrome(service=service,options=options)
             driver.set_page_load_timeout(30)
             continue
         # print(n)
@@ -358,7 +369,8 @@ def bt_daily_extractor(df: pd.DataFrame) -> pd.DataFrame:
                 n += 1
         except:
             driver.close()
-            driver = webdriver.Chrome(options=options)
+            service = ChromeService(executable_path=chrome_driver_path)
+            driver = webdriver.Chrome(service=service,options=options)
             driver.set_page_load_timeout(30)
             continue
         
@@ -401,14 +413,15 @@ def cnbc_daily_extractor(df:pd.DataFrame = None) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://www.cnbctv18.com/market/")
 
     # Scroll
     scrollPage(driver)
 
     # Wait for the page to load
-    elem = WebDriverWait(driver, 15).until(
+    elem = WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.CLASS_NAME, 'top-news-flex'))
     )
 
@@ -501,7 +514,8 @@ def eqbull_daily_extractor(df: pd.DataFrame = None) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://www.equitybulls.com/")
 
     # Scroll
@@ -566,7 +580,8 @@ def et_daily_extractor(df: pd.DataFrame = None) -> pd.DataFrame:
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://economictimes.indiatimes.com/markets")
     
 
@@ -629,10 +644,13 @@ def finex_daily_extractor(df:pd.DataFrame = None) -> pd.DataFrame:
     :return: A dataframe with the extracted data appended to the input dataframe
     :rtype: pd.DataFrame
     """
+    
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service,options=options)
     driver.get("https://www.financialexpress.com/market/")
 
     # Scroll
@@ -671,7 +689,8 @@ def finex_daily_extractor(df:pd.DataFrame = None) -> pd.DataFrame:
                 n += 1
         except:
             driver.close()
-            driver = webdriver.Chrome(options=options)
+            service = ChromeService(executable_path=chrome_driver_path)
+            driver = webdriver.Chrome(service=service,options=options)
             driver.set_page_load_timeout(15)
             continue
 
